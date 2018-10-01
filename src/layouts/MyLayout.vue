@@ -14,9 +14,9 @@
     </q-page-container>
     
     <q-tabs class="bottoms-qtaps" color="amber" position="bottom" text-color="dark" align="justify"> 
-      <q-route-tab default slot="title" to="/"  icon="message" />
-      <q-route-tab slot="title" to="#"  icon="fingerprint" />
-      <q-route-tab slot="title" to="#" icon="account_box" />
+      <q-route-tab default slot="title" to="/"  icon="home" />
+      <q-route-tab slot="title" to="/search"  icon="search" />
+      <q-route-tab slot="title" to="/user" icon="account_box" />
     </q-tabs>
   </q-layout>
 </template>
@@ -40,5 +40,6 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 1;
 }
 </style>
