@@ -22,7 +22,15 @@
       </q-tabs>
       </q-toolbar>
     </q-layout-footer>
-
+    <q-btn
+          v-back-to-top.animate="{offset: 50, duration: 10}"
+          round
+          color="primary"
+          class="fixed-bottom-right animate-pop"
+          style="margin: 0 15px 65px 0;z-index:3"
+        >
+          <q-icon name="keyboard_arrow_up" />
+    </q-btn>
   </q-layout>
 </template>
 

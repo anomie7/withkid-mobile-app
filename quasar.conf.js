@@ -58,7 +58,8 @@ module.exports = function (ctx) {
         'QCarouselControl'
       ],
       directives: [
-        'Ripple'
+        'Ripple',
+        'BackToTop'
       ],
       // Quasar plugins
       plugins: [

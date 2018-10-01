@@ -34,7 +34,7 @@
   margin-top: 10px;
 }
 .main-footer {
-  font-size: 0.7em;
+  font-size: 0.5em;
   width: 100%;
   padding: 5px;
   border: 1px solid black;
