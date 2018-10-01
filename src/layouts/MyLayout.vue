@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-layout-header >
+    <q-layout-header reveal>
       <q-toolbar color="amber" text-color="dark">
         <q-toolbar-title>
           위드키즈
@@ -9,15 +9,20 @@
       </q-toolbar>
     </q-layout-header>
 
-    <q-page-container>
+    <q-page-container class="scroll">
       <router-view />
     </q-page-container>
-    
-    <q-tabs class="bottoms-qtaps" color="amber" position="bottom" text-color="dark" align="justify"> 
-      <q-route-tab default slot="title" to="/"  icon="home" />
-      <q-route-tab slot="title" to="/search"  icon="search" />
-      <q-route-tab slot="title" to="/user" icon="account_box" />
-    </q-tabs>
+
+    <q-layout-footer >
+      <q-toolbar color="amber" >
+      <q-tabs class="bottoms-qtaps" color="amber" position="bottom" text-color="dark" align="justify"> 
+        <q-route-tab default slot="title" to="/"  icon="home" />
+        <q-route-tab slot="title" to="/search"  icon="search" />
+        <q-route-tab slot="title" to="/user" icon="account_box" />
+      </q-tabs>
+      </q-toolbar>
+    </q-layout-footer>
+
   </q-layout>
 </template>
 
@@ -37,9 +42,6 @@ export default {
 
 <style>
 .bottoms-qtaps{
-    position: fixed;
-    bottom: 0;
     width: 100%;
-    z-index: 1;
 }
 </style>

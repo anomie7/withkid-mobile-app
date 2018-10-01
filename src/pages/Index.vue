@@ -1,27 +1,43 @@
 <template>
   <q-page class="scroll" >
-    <q-carousel class="text-white ">
+    <q-carousel class="text-white" style="height:100px">
       <q-carousel-slide class="bg-primary">
-        Slide 1
+        광고 기획전
       </q-carousel-slide>
       <q-carousel-slide class="bg-secondary">
-        Slide 2
+        기획전 2
       </q-carousel-slide>
       <q-carousel-slide class="bg-tertiary">
-        Slide 3
+        몰라 3
       </q-carousel-slide>
     </q-carousel>
-    <content-swiper v-for="k in [1, 2 ] " :key="k"></content-swiper>
+    <content-swiper v-for="k in [1, 2, 3, 4, 5, 6, 7] " :key="k"></content-swiper>
+    <div style="padding: 10px;">
+      <div class="main-footer">
+        <ul style="padding: 0 10px;margin: 0;">
+           footer
+          <li>대포: anomie7</li>
+          <li> 게발자: anomie7</li>
+          <li>본 서비스는 정보 제공을 목적으로 하며 각 컨텐츠에 대한 책임은 주최사와 판매업체에 있음을 고시함당</li>
+        </ul>        
+      </div>
+    </div>
   </q-page>
 </template>
 
 <style>
-.swiper-slide{
+.swiper-slide {
   background-color: bisque;
 }
-.swiper-container{
+.swiper-container {
   height: 150px;
-  margin-top: 10px
+  margin-top: 10px;
+}
+.main-footer {
+  font-size: 0.7em;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid black;
 }
 </style>
 
@@ -30,11 +46,9 @@ import contentSwiper from "./../components/contentSwiperComponent";
 
 export default {
   name: "PageIndex",
-   data() {
-      return {
-
-      }
-    },
-    components: {contentSwiper}
+  data() {
+    return {};
+  },
+  components: { contentSwiper }
 };
 </script>
