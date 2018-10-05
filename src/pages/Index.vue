@@ -1,6 +1,6 @@
 <template>
   <q-page class="scroll" >
-    <q-carousel class="text-white" style="height:100px">
+    <q-carousel class="text-white" style="height:150px;margin-bottom:10px">
       <q-carousel-slide class="bg-primary">
         광고 기획전
       </q-carousel-slide>
@@ -11,7 +11,7 @@
         몰라 3
       </q-carousel-slide>
     </q-carousel>
-    <content-swiper v-for="k in [1, 2, 3, 4, 5, 6, 7] " :key="k"></content-swiper>
+    <content-swiper v-for="k in [1, 2, 3, 4, 5, 6, 7]" :card-count="[1, 2, 3, 4, 5, 6, 7]" :key="k"></content-swiper>
     <div style="padding: 10px;">
       <div class="main-footer">
         <ul style="padding: 0 10px;margin: 0;">
@@ -27,11 +27,11 @@
 
 <style>
 .swiper-slide {
-  background-color: bisque;
+  background-color: white;
 }
 .swiper-container {
-  height: 150px;
-  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 5px 0;
 }
 .main-footer {
   font-size: 0.5em;

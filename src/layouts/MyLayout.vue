@@ -23,7 +23,7 @@
       </q-toolbar>
     </q-layout-footer>
     <q-btn
-          v-back-to-top.animate="{offset: 50, duration: 10}"
+          v-back-to-top.animate="{offset: 100, duration: 0}"
           round
           color="primary"
           class="fixed-bottom-right animate-pop"
