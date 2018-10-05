@@ -1,4 +1,6 @@
 <template>
+  <div>
+  <div class="swiper-container-title">타이틀에는 무엇이 들어갈까요.</div>
   <swiper :options="swiperOption">
         <swiper-slide v-for="i in cardCount" :key="i">
           <q-card>
@@ -14,6 +16,7 @@
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
+  </div>
 </template>
 
 <script>
@@ -38,6 +41,11 @@ export default {
 </script>
 
 <style>
+.swiper-container-title{
+  margin: 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
 .q-card-container{
   padding: 0px;
 }
