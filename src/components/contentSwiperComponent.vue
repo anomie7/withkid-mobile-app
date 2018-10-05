@@ -5,7 +5,7 @@
         <swiper-slide v-for="i in cardCount" :key="i">
           <q-card>
             <q-card-media>
-              <img src="./../assets/18012228_p.gif">
+              <img src="./../assets/18012228_p.gif" @click="opened = true">
               <!-- <img src="./../assets/18009908_p.gif"> -->
             </q-card-media>
             <q-card-title>
@@ -16,6 +16,14 @@
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
+  <q-modal v-model="opened">
+    <h4>Basic Modal</h4>
+    <q-btn
+      color="primary"
+      @click="opened = false"
+      label="Close"
+    />
+  </q-modal>
   </div>
 </template>
 
@@ -34,7 +42,8 @@ export default {
           el: "",
           clickable: true
         }
-      }
+      },
+      opened: false
     };
   }
 };
@@ -54,5 +63,8 @@ export default {
 }
 .q-card-subtitle, .q-card-title-extra{
   font-size: 12px;
+}
+.q-card-media  img{
+  cursor: pointer;
 }
 </style>
