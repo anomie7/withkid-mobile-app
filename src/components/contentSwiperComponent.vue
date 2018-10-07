@@ -5,8 +5,7 @@
         <swiper-slide v-for="i in cardCount" :key="i">
           <q-card>
             <q-card-media>
-              <img src="./../assets/18012228_p.gif" @click="opened = true">
-              <!-- <img src="./../assets/18009908_p.gif"> -->
+              <img src="./../assets/20181005210621989.gif" @click="opened = true">
             </q-card-media>
             <q-card-title>
               아기 돼지 삼형제
