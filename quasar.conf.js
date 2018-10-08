@@ -60,7 +60,7 @@ module.exports = function(ctx) {
         "QCardActions",
         'QModal'
       ],
-      directives: ["Ripple", "BackToTop"],
+      directives: ["Ripple", "BackToTop", 'Scroll'],
       // Quasar plugins
       plugins: ["Notify"]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
