@@ -48,9 +48,11 @@ export default {
   methods: {
     openURL,
     scrolled(scroll){
-       if(window.innerHeight + scroll.position >= document.body.offsetHeight){
-         this.items = this.items.concat( [{}, {}, {} ]);
-        console.log(this)
+      let a = window.innerHeight + scroll.position;
+      let b = document.body.offsetHeight;
+      // console.log(`${a}  ${b}`);
+      if(a >= b){
+        this.items = this.items.concat( [{}, {}, {} ]);
       }
     }
   },
