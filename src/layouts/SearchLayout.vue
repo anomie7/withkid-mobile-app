@@ -48,11 +48,12 @@ export default {
   methods: {
     openURL,
     scrolled(scroll){
-      let a = window.innerHeight + scroll.position;
+      let a = window.innerHeight + scroll.position + 1;
       let b = document.body.offsetHeight;
-      // console.log(`${a}  ${b}`);
+      console.log(`${a}  ${b}`);
       if(a >= b){
         this.items = this.items.concat( [{}, {}, {} ]);
+         console.log(`${a}  ${b}`);
       }
     }
   },
