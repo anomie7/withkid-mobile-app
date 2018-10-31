@@ -58,7 +58,8 @@ module.exports = function(ctx) {
         "QCardMedia",
         "QCardSeparator",
         "QCardActions",
-        'QModal'
+        'QModal',
+        'QDatetime'
       ],
       directives: ["Ripple", "BackToTop", 'Scroll'],
       // Quasar plugins

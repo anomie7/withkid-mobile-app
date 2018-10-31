@@ -3,13 +3,14 @@
     <q-layout-header reveal>
       <q-toolbar color="blue" text-color="dark">
         <q-toolbar-title>
-          여긴 검색창  ㅇㅇ
+          검색창
+          <q-datetime clearable v-model="startDate" type="date" />
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
 
     <q-page-container class="scroll">
-      <search-component :items="items"></search-component>
+      <search-component :events="events"></search-component>
     </q-page-container>
 
     <q-layout-footer >
@@ -36,13 +37,18 @@
 <script>
 import { openURL } from "quasar";
 import { debounce } from 'quasar'
+import axios from "axios";
 import SearchComponent from "../pages/search";
 
+axios.defaults.baseURL = 'http://localhost:8081/'
 export default {
   name: "SearchLayout",
   data() {
     return {
-      items: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      startDate: null,
+      events: [],
+      currentPageNum: 0,
+      hasNextPage: false
     };
   },
   methods: {
@@ -50,12 +56,40 @@ export default {
     scrolled(scroll){
       let a = window.innerHeight + scroll.position + 1;
       let b = document.body.offsetHeight;
-      console.log(`${a}  ${b}`);
       if(a >= b){
-        this.items = this.items.concat( [{}, {}, {} ]);
-         console.log(`${a}  ${b}`);
+        if(this.hasNextPage){
+          this.currentPageNum++;
+          this.search();
+        }
+        console.log(`${a}  ${b}`);
       }
+    },
+    search(){
+      console.log('send request to server')
+      let $this = this;
+      axios.get('/event', {
+        params: {
+          city: null,
+          kindOf: null,
+          startDateTime: null,
+          endDateTime: null,
+          page: $this.currentPageNum,
+          size: 10
+        },
+      })
+      .then(function (res){
+        let $event = res.data;
+        console.log($event);
+        $this.hasNextPage = $event.hasNextPage
+        $this.events = $this.events.concat($event.events);
+      })
+      .catch(function(error){
+        console.log(error)
+      })
     }
+  },
+  created() {
+      this.search();
   },
   components: {SearchComponent}
 };

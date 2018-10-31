@@ -1,20 +1,20 @@
 <template>
   <q-page padding class="search-page">
     <div>
-      <q-card v-for="(item, index) in items" :key="index" class="event-card">
+      <q-card v-for="(item, index) in events" :key="index" class="event-card">
         <q-card-media :height="150">
           <img src="./../assets/20181016000116704.gif">
         </q-card-media>
         <q-card-title>
-           시간을 파는 상점
+           {{item.name}}
         </q-card-title>
         <q-card-main>
-          <p>파랑 씨어터</p>
-          <p class="text-faded">2017.10.01 ~ 2018.11.25</p>
+          <p>{{item.location}}</p>
+          <p class="text-faded">{{item.startDate}} ~ {{item.endDate}}</p>
         </q-card-main>
         <q-card-separator />
         <q-card-actions>
-          가격 30,000원
+          {{item.price}}
         </q-card-actions>
       </q-card>
 
@@ -26,7 +26,7 @@
 <script>
 export default {
   name: "PageSearch",
-  props: ["items"],
+  props: ["events"],
   data() {
     return {};
   },
