@@ -60,7 +60,8 @@ module.exports = function(ctx) {
         "QCardActions",
         'QModal',
         'QDatetime',
-        'QCollapsible'
+        'QCollapsible',
+        'QSelect'
       ],
       directives: ["Ripple", "BackToTop", 'Scroll'],
       // Quasar plugins
