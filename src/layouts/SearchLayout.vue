@@ -5,8 +5,9 @@
         <q-toolbar-title>
           <q-select v-model="kindOf" stack-label="카테고리" radio :options="kindOfOptions" />
           <q-select v-model="region" stack-label="지역" radio :options="regionOptions" />
-          <q-btn icon="search" @click="searchItem"></q-btn>
-          <!-- <q-datetime clearable v-model="startDate" type="date" /> -->
+          <q-datetime clearable v-model="startDate" type="date" />
+          <q-datetime clearable v-model="endDate" type="date" />
+          <q-btn icon="search" align="right" @click="searchItem"></q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
@@ -46,6 +47,7 @@
     data() {
       return {
         startDate: null,
+        endDate: null,
         events: [],
         currentPageNum: 0,
         hasNextPage: false,
@@ -134,8 +136,8 @@
             params: {
               city: $this.region,
               kindOf: $this.kindOf,
-              startDateTime: null,
-              endDateTime: null,
+              startDateTime: $this.startDate,
+              endDateTime: $this.endDate,
               page: $this.currentPageNum,
               size: 10
             }
@@ -158,8 +160,8 @@
             params: {
               city: $this.region,
               kindOf: $this.kindOf,
-              startDateTime: null,
-              endDateTime: null,
+              startDateTime: $this.startDate,
+              endDateTime: $this.endDate,
               page: $this.currentPageNum,
               size: 10
             }
