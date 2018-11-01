@@ -2,44 +2,25 @@
   <q-page padding class="search-page">
     <div>
       <q-card v-for="(item, index) in events" :key="index" class="event-card">
-        <q-card-media :height="150">
-          <img :src="hostDomain + item.imageFilePath">
-        </q-card-media>
-        <q-card-title>
-           {{item.name}}
-        </q-card-title>
-        <q-card-main>
-          <div class="category-badge">
-            <p>{{item.kindOf}}</p>
-          </div>
-          <p>{{item.location}}</p>
-          <p class="text-faded">{{item.startDate}} ~ {{item.endDate}}</p>
-        </q-card-main>
-        <q-card-separator />
-        <q-list>
-          <q-collapsible icon="payment" label="Price">
-            <div v-for="(p, i) of item.price" :key="i" class="price">
-              {{p.price}}원
-            </div>
-          </q-collapsible>
-        </q-list>
+        <search-item :item="item" :key="index"></search-item>
       </q-card>
-
       <div slot="message" :size="40">...</div>
     </div>
   </q-page>
 </template>
 
 <script>
+import SearchItem from "./../components/SearchItem";
+
 export default {
   name: "PageSearch",
   props: ["events"],
   data() {
     return {
-      hostDomain: "http://www.localhost:8081"
     };
   },
-  methods: {}
+  methods: {},
+  components: {SearchItem}
 };
 </script>
 
@@ -61,9 +42,8 @@ export default {
 .category-badge{
   width: 80px;
   height: 20px;
-  margin: 5px;
   position:absolute;
-  right: 10px;
+  right: 5%;
   background-color: ghostwhite;
   text-align: center;
   border-radius: 10px;
