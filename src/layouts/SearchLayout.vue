@@ -4,6 +4,7 @@
       <q-toolbar color="blue" text-color="dark">
         <q-toolbar-title>
           <q-select v-model="kindOf" stack-label="카테고리" radio :options="kindOfOptions" />
+          <q-select v-model="region" stack-label="지역" radio :options="regionOptions" />
           <q-btn icon="search" @click="searchItem"></q-btn>
           <!-- <q-datetime clearable v-model="startDate" type="date" /> -->
         </q-toolbar-title>
@@ -49,9 +50,10 @@
         currentPageNum: 0,
         hasNextPage: false,
         kindOf: null,
+        region: null,
         kindOfOptions: [
         {
-          label: 'All',
+          label: '전체',
           value: null
         },
         {
@@ -71,6 +73,44 @@
           value: 'Ex'
         }
       ],
+      regionOptions: [
+        {
+          label: '전체',
+          value: null
+        },
+        {
+          label: '서울',
+          value: '서울'
+        },
+        {
+          label: '부산',
+          value: '부산'
+        },
+        {
+          label: '대구',
+          value: '대구'
+        },
+        {
+          label: '인천',
+          value: '인천'
+        },
+        {
+          label: '대전',
+          value: '대전'
+        },
+        {
+          label: '광주',
+          value: '광주'
+        },
+        {
+          label: '울산',
+          value: '울산'
+        },
+        {
+          label: '세종',
+          value: '세종'
+        }
+      ]
       };
     },
     methods: {
@@ -92,7 +132,7 @@
         axios
           .get("/event", {
             params: {
-              city: null,
+              city: $this.region,
               kindOf: $this.kindOf,
               startDateTime: null,
               endDateTime: null,
@@ -116,7 +156,7 @@
         axios
           .get("/event", {
             params: {
-              city: null,
+              city: $this.region,
               kindOf: $this.kindOf,
               startDateTime: null,
               endDateTime: null,
