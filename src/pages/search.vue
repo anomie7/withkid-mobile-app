@@ -4,7 +4,8 @@
       <q-card v-for="(item, index) in events" :key="index" class="event-card">
         <search-item :item="item" :key="index"></search-item>
       </q-card>
-      <div slot="message" :size="40">...</div>
+      <div slot="message" :size="40" v-show="hasNextPage">loading...</div>
+      <div slot="message" :size="40" v-show="!hasNextPage">검색 결과가 엄서용</div>
     </div>
   </q-page>
 </template>
@@ -14,7 +15,7 @@ import SearchItem from "./../components/SearchItem";
 
 export default {
   name: "PageSearch",
-  props: ["events"],
+  props: ["events", "hasNextPage"],
   data() {
     return {
     };

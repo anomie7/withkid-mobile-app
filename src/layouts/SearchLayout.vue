@@ -2,18 +2,12 @@
   <q-layout view="lHh Lpr lFf" @scroll="scrolled">
     <q-layout-header reveal>
       <q-toolbar color="blue" text-color="dark">
-        <q-toolbar-title>
-          <q-select v-model="kindOf" stack-label="카테고리" radio :options="kindOfOptions" />
-          <q-select v-model="region" stack-label="지역" radio :options="regionOptions" />
-          <q-datetime clearable v-model="startDate" type="date" />
-          <q-datetime clearable v-model="endDate" type="date" />
-          <q-btn icon="search" align="right" @click="searchItem"></q-btn>
-        </q-toolbar-title>
+        <search-bar @searchBarClick="receiveSearchbarRes"></search-bar>
       </q-toolbar>
     </q-layout-header>
   
     <q-page-container class="scroll">
-      <search-component :events="events"></search-component>
+      <search-component :events="events" :hasNextPage="hasNextPage"></search-component>
     </q-page-container>
   
     <q-layout-footer>
@@ -32,87 +26,28 @@
 </template>
 
 <script>
-  import {
-    openURL
-  } from "quasar";
-  import {
-    debounce
-  } from "quasar";
+  import {openURL} from "quasar";
+  import { debounce} from "quasar";
   import axios from "axios";
   import SearchComponent from "../pages/search";
+  import SearchBar from '../components/SearchBar.vue'
   
   axios.defaults.baseURL = "http://localhost:8081/";
   export default {
     name: "SearchLayout",
     data() {
       return {
-        startDate: null,
-        endDate: null,
         events: [],
         currentPageNum: 0,
         hasNextPage: false,
-        kindOf: null,
-        region: null,
-        kindOfOptions: [
-        {
-          label: '전체',
-          value: null
-        },
-        {
-          label: '뮤지컬',
-          value: 'Mu'
-        },
-        {
-          label: '연극',
-          value: 'Pl'
-        },
-        {
-          label: '클래식/무용',
-          value: 'Cl'
-        },
-        {
-          label: '전시/행사',
-          value: 'Ex'
+        searchParam: {
+          region: null,
+          kindOf: null,
+          startDate: null,
+          endDate: null,
+          page: 0,
+          size: 10
         }
-      ],
-      regionOptions: [
-        {
-          label: '전체',
-          value: null
-        },
-        {
-          label: '서울',
-          value: '서울'
-        },
-        {
-          label: '부산',
-          value: '부산'
-        },
-        {
-          label: '대구',
-          value: '대구'
-        },
-        {
-          label: '인천',
-          value: '인천'
-        },
-        {
-          label: '대전',
-          value: '대전'
-        },
-        {
-          label: '광주',
-          value: '광주'
-        },
-        {
-          label: '울산',
-          value: '울산'
-        },
-        {
-          label: '세종',
-          value: '세종'
-        }
-      ]
       };
     },
     methods: {
@@ -122,8 +57,10 @@
         let b = document.body.offsetHeight;
         if (a >= b) {
           if (this.hasNextPage) {
-            this.currentPageNum++;
+            this.searchParam.page++;
             this.search();
+          }else if(!this.hasNextPage){
+            console.log('no more events obj!')
           }
           console.log(`${a}  ${b}`);
         }
@@ -133,55 +70,33 @@
         let $this = this;
         axios
           .get("/event", {
-            params: {
-              city: $this.region,
-              kindOf: $this.kindOf,
-              startDateTime: $this.startDate,
-              endDateTime: $this.endDate,
-              page: $this.currentPageNum,
-              size: 10
-            }
+            params: $this.searchParam
           })
           .then(function(res) {
             let $event = res.data;
             console.log($event);
             $this.hasNextPage = $event.hasNextPage;
+            $this.currentPageNum = $event.currentPageNum;
             $this.events = $this.events.concat($event.events);
           })
           .catch(function(error) {
             console.log(error);
           });
       },
-      searchItem(){
-         console.log("send request to server");
-        let $this = this;
-        axios
-          .get("/event", {
-            params: {
-              city: $this.region,
-              kindOf: $this.kindOf,
-              startDateTime: $this.startDate,
-              endDateTime: $this.endDate,
-              page: $this.currentPageNum,
-              size: 10
-            }
-          })
-          .then(function(res) {
-            let $event = res.data;
-            console.log($event);
-            $this.hasNextPage = $event.hasNextPage;
-            $this.events = $event.events;
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+      receiveSearchbarRes($data){
+        console.log('handling searchBarClick event')
+        console.log($data);
+        this.hasNextPage = $data.hasNextPage;
+        this.events = $data.events;
+        this.searchParam = $data.searchParam;
       }
     },
     created() {
       this.search();
     },
     components: {
-      SearchComponent
+      SearchComponent,
+      SearchBar
     }
   };
 </script>
