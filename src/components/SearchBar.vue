@@ -4,13 +4,23 @@
           <q-select v-model="searchParam.region" stack-label="지역" radio :options="regionOptions" />
           <q-datetime clearable v-model="searchParam.startDate" type="date" />
           <q-datetime clearable v-model="searchParam.endDate" type="date" />
+          <div class="date-chip-container">
+            <q-btn rounded push text-color="primary" color="white" @click="getThisWeek" label="이번주"> </q-btn>
+            <q-btn rounded push color="red" label="이번 주말" @click="getThisWeekEnd"> </q-btn>
+            <q-btn rounded push  color="amber" label="다음주" @click="getNextWeek"> </q-btn>
+            <q-btn rounded push color="teal" label="다음 주말" @click="getNextWeekEnd"> </q-btn>
+            <q-btn rounded push text-color="" color="light" label="이번달" @click="getThisMonth"> </q-btn>
+            <q-btn rounded push text-color="primary" color="lime" label="다음달" @click="getNextMonth"> </q-btn>
+          </div>
           <q-btn icon="search" align="right" @click="searchItem"></q-btn>
       </q-toolbar-title>
 </template>
 
 <script>
 import axios from "axios";
+import moment from "moment";
 import searchVue from '../pages/search.vue';
+
 export default {
   // name: 'ComponentName',
   data () {
@@ -104,10 +114,56 @@ export default {
           .catch(function(error) {
             console.log(error);
           });
+      },
+      getThisWeek(){
+        let param = this.searchParam;
+        param.startDate = moment().format();
+        param.endDate = moment().endOf('isoWeek').format();
+        console.log(`${param.startDate} ~ ${param.endDate }`)
+      },
+      getThisWeekEnd(){
+        let param = this.searchParam;
+        let endOf = moment().endOf('isoWeek');
+        param.startDate = endOf.clone().subtract(1, 'days').format();
+        param.endDate = endOf.format();
+        console.log(`${param.startDate} ~ ${param.endDate }`);
+      },
+      getNextWeek(){
+        let param = this.searchParam;
+        let startOfNext = moment().startOf('isoWeek').add(7, 'days');
+        let endOfNext = startOfNext.clone().endOf('isoWeek');
+        console.log(`${startOfNext} ~ ${endOfNext}`)
+        param.startDate = startOfNext.format();
+        param.endDate = endOfNext.format();
+      },
+      getNextWeekEnd(){
+        let param = this.searchParam;
+        let endOfNext = moment().endOf('isoWeek').add(7, 'days');
+        let startOfNext = endOfNext.clone().subtract(1, 'days');
+        console.log(`${startOfNext} ~ ${endOfNext}`)
+        param.startDate = startOfNext.format();
+        param.endDate = endOfNext.format();
+      },
+      getThisMonth(){
+        let param = this.searchParam;
+        param.startDate = moment().format();
+        param.endDate = moment().endOf('month').format();
+        console.log(`${param.startDate} ~ ${param.endDate }`)
+      },
+      getNextMonth(){
+        let param = this.searchParam;
+        let startOfNext = moment().startOf('month').add(1, 'M');
+        let endOfNext = startOfNext.clone().endOf('month');
+        console.log(`${startOfNext} ~ ${endOfNext}`)
+        param.startDate = startOfNext.format();
+        param.endDate = endOfNext.format();
       }
   }
 }
 </script>
 
 <style>
+.date-chip-container{
+  margin: 0.5em auto;
+}
 </style>
