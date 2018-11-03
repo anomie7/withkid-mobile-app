@@ -4,14 +4,19 @@
           <q-select v-model="searchParam.region" stack-label="지역" radio :options="regionOptions" />
           <q-datetime clearable v-model="searchParam.startDate" type="date" />
           <q-datetime clearable v-model="searchParam.endDate" type="date" />
-          <div class="date-chip-container">
-            <q-btn rounded push text-color="primary" color="white" @click="getThisWeek" label="이번주"> </q-btn>
-            <q-btn rounded push color="red" label="이번 주말" @click="getThisWeekEnd"> </q-btn>
-            <q-btn rounded push  color="amber" label="다음주" @click="getNextWeek"> </q-btn>
-            <q-btn rounded push color="teal" label="다음 주말" @click="getNextWeekEnd"> </q-btn>
-            <q-btn rounded push text-color="" color="light" label="이번달" @click="getThisMonth"> </q-btn>
-            <q-btn rounded push text-color="primary" color="lime" label="다음달" @click="getNextMonth"> </q-btn>
-          </div>
+          <swiper class="date-chip-container">
+            <swiper-slide>            
+              <q-btn rounded push text-color="primary" color="white" @click="getThisWeek" label="이번주"> </q-btn>
+              <q-btn rounded push color="red" label="이번 주말" @click="getThisWeekEnd"> </q-btn>
+              <q-btn rounded push  color="amber" label="다음주" @click="getNextWeek"> </q-btn>
+              <q-btn rounded push color="teal" label="다음 주말" @click="getNextWeekEnd"> </q-btn>
+              <q-btn rounded push text-color="" color="light" label="이번달" @click="getThisMonth"> </q-btn>
+              <q-btn rounded push text-color="primary" color="lime" label="다음달" @click="getNextMonth"> </q-btn>
+            </swiper-slide>
+            <swiper-slide>
+              
+            </swiper-slide>
+          </swiper>
           <q-btn icon="search" align="right" @click="searchItem"></q-btn>
       </q-toolbar-title>
 </template>
@@ -115,6 +120,9 @@ export default {
             console.log(error);
           });
       },
+      containerPull(event){
+        console.log(event);
+      },
       getThisWeek(){
         let param = this.searchParam;
         param.startDate = moment().format();
@@ -165,5 +173,8 @@ export default {
 <style>
 .date-chip-container{
   margin: 0.5em auto;
+}
+.touch-to-left{
+  transform: translateX(-167px);
 }
 </style>
