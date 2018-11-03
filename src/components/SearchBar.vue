@@ -177,4 +177,7 @@ export default {
 .touch-to-left{
   transform: translateX(-167px);
 }
+.swiper-slide{
+  background-color: initial;
+}
 </style>
