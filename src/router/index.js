@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 
 import routes from './routes'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-
 // require styles
 import 'swiper/dist/css/swiper.css'
 
