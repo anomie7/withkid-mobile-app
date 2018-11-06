@@ -178,6 +178,6 @@ export default {
   transform: translateX(-167px);
 }
 .swiper-slide{
-  background-color: initial;
+  background-color: initial !important;
 }
 </style>
