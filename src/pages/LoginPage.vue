@@ -9,6 +9,7 @@
 
 <script>
   import axios from 'axios';
+
   import {
     LocalStorage,
     SessionStorage
@@ -37,6 +38,7 @@
             let accessToken = data.accessToken;
             let refreshToken = data.refreshToken;
             $this.storeToken(accessToken, refreshToken);
+            $this.$router.push('/')
           })
           .catch(function(err) {
             console.error(err);
