@@ -1,12 +1,14 @@
 import { LocalStorage, SessionStorage } from 'quasar'
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://www.localhost:8082";
+const BASE_URL = "http://www.localhost:8082";
+
 function validateAccessTkn(accessTkn, next){
   axios.get('/accessToken',{
     headers: {
       'Authorization': accessTkn
-    }
+    },
+    baseURL: BASE_URL
   })
   .then(function(res){
     console.log(res);
@@ -27,7 +29,8 @@ function validateRefreshToken(refreshTkn, next){
     url: '/accessToken',
     headers: {
       'Authorization': refreshTkn
-    }
+    },
+    baseURL: BASE_URL
   }).then(function(res){
     //refresh token으로 aceess token 발급 받고 메인으로
     console.log(res);
