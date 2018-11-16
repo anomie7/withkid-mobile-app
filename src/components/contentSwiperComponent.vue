@@ -1,15 +1,15 @@
 <template>
   <div>
-  <div class="swiper-container-title">타이틀에는 무엇이 들어갈까요.</div>
+  <div class="swiper-container-title">최근 조회한 이벤트</div>
   <swiper :options="swiperOption">
-        <swiper-slide v-for="i in cardCount" :key="i">
+        <swiper-slide v-for="(item, i) in eventLog" :key="i">
           <q-card>
             <q-card-media>
-              <img src="./../assets/20181005210621989.gif" @click="opened = true">
+              <img :src="'http://localhost:8081' + item.imageFilePath" @click="opened = true">
             </q-card-media>
             <q-card-title>
-              아기 돼지 삼형제
-               <span slot="subtitle">2010.08.04 ~ 2019.10.02</span>
+              {{item.name}}
+               <span slot="subtitle">{{item.startDate}} ~ {{item.endDate}}</span>
             </q-card-title>
           </q-card>
         </swiper-slide>
@@ -29,7 +29,7 @@
 <script>
 export default {
   name: "ContentSwiper",
-  props: ['cardCount'],
+  props: ['eventLog'],
   data() {
     return {
       swiperOption: {
