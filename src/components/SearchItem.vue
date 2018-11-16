@@ -1,8 +1,9 @@
 <template>
   <div>
-     <q-card-media :height="150">
+    <div @click="storeLog">
+      <q-card-media :height="150">
           <img :src="imgUrl">
-        </q-card-media>
+      </q-card-media>
         <q-card-title>
            {{item.name}}
         </q-card-title>
@@ -14,6 +15,7 @@
           <p class="text-faded">{{item.startDate}} ~ {{item.endDate}}</p>
         </q-card-main>
         <q-card-separator />
+    </div>
         <q-list>
           <q-collapsible icon="payment" label="Price">
             <div v-for="(p, i) of item.price" :key="i" class="price">
@@ -25,9 +27,34 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { SessionStorage } from 'quasar'
+
 export default {
   name: 'SearchItem',
   props: ["item"],
+  methods: {
+    storeLog(e){
+      let access = SessionStorage.get.item('accessToken');
+      let $this = this;
+       axios({
+        method: 'post',
+        url: '/eventLog',
+        headers: {
+          'Authorization': access
+        },
+        data: {
+           ...$this.item
+        },
+        baseURL: $this.hostDomain
+      }).then(function(res){
+        console.log(res.data)
+      })
+      .catch(function(err){
+        console.log(err)
+      })
+    }
+  },
   computed: {
     imgUrl(){
       return this.hostDomain + this.item.imageFilePath
