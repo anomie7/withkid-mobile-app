@@ -26,6 +26,7 @@ import axios from "axios";
 import moment from "moment";
 import searchVue from '../pages/search.vue';
 
+const BASE_URL = "http://www.localhost:8081"
 export default {
   // name: 'ComponentName',
   data () {
@@ -105,7 +106,8 @@ export default {
         let $searchParam =  Object.assign({}, this.searchParam);
         axios
           .get("/event", {
-            params: $searchParam
+            params: $searchParam,
+            baseURL: BASE_URL
           })
           .then(function(res) {
             console.log('receive 500 code')

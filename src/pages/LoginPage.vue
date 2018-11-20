@@ -9,13 +9,14 @@
 
 <script>
   import axios from 'axios';
-
+  
   import {
     LocalStorage,
     SessionStorage
   } from 'quasar';
   
-  axios.defaults.baseURL = "http://www.localhost:8082";
+  
+  const BASE_URL = "http://www.localhost:8082";
   export default {
     // name: 'PageName',
     data() {
@@ -31,6 +32,9 @@
         let $this = this;
         axios.post('/login', {
             ...$this.user
+          },
+          {
+            baseURL: BASE_URL
           })
           .then(function(res) {
             let data = res.data;
@@ -38,7 +42,7 @@
             let accessToken = data.accessToken;
             let refreshToken = data.refreshToken;
             $this.storeToken(accessToken, refreshToken);
-            $this.$router.push('/')
+            $this.$router.replace('/')
           })
           .catch(function(err) {
             console.error(err);
