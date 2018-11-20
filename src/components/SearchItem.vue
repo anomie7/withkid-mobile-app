@@ -29,7 +29,7 @@
 <script>
 import axios from 'axios'
 import { SessionStorage, LocalStorage } from 'quasar'
-import  {validateRefreshToken, storeEventLog} from "./auth.js";
+import {validateRefreshToken, storeEventLog} from "./SearchItemMethods";
 
 export default {
   name: 'SearchItem',
