@@ -28,7 +28,8 @@
 
 <script>
 import axios from 'axios'
-import { SessionStorage } from 'quasar'
+import { SessionStorage, LocalStorage } from 'quasar'
+import  validateRefreshToken from "./auth.js";
 
 export default {
   name: 'SearchItem',
@@ -51,7 +52,12 @@ export default {
         console.log(res.data)
       })
       .catch(function(err){
-        console.log(err)
+        console.log(err.response.data)
+        if(err.response.status == 401){
+          let refresh = LocalStorage.get.item('refreshToken')
+          console.log('401 error')
+          validateRefreshToken.apply($this, refresh);
+        }
       })
     }
   },

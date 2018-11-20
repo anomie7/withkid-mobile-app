@@ -11,7 +11,6 @@
         몰라 3
       </q-carousel-slide>
     </q-carousel>
-    <!-- <content-swiper :card-count="" key="11"></content-swiper> -->
     <content-swiper v-for="k in [1, 2]" :event-log="latestClickLOgs" :key="k"></content-swiper>
     <div style="padding: 10px;">
       <div class="main-footer">
