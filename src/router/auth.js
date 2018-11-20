@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { LocalStorage, SessionStorage } from 'quasar'
+import {AUTH_BASE_URL} from './../js/global-var'
 
-const BASE_URL = "http://www.localhost:8082";
-
+const BASE_URL = AUTH_BASE_URL;
 function validateAccessTkn(accessTkn, next){
   axios.get('/accessToken',{
     headers: {

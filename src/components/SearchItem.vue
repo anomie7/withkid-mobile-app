@@ -30,6 +30,7 @@
 import axios from 'axios'
 import { SessionStorage, LocalStorage } from 'quasar'
 import {validateRefreshToken, storeEventLog} from "./SearchItemMethods";
+import {RESOURCE_BASE_URL} from './../js/global-var';
 
 export default {
   name: 'SearchItem',
@@ -61,7 +62,7 @@ export default {
   },
   data () {
     return {
-       hostDomain: "http://www.localhost:8081"
+       hostDomain: RESOURCE_BASE_URL
     }
   }
 }

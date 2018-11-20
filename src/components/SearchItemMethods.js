@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { LocalStorage, SessionStorage } from 'quasar'
-
-const AUTH_BASE_URL = "http://www.localhost:8082";
-const RESOURCE_BASE_URL = "http://www.localhost:8081";
+import {AUTH_BASE_URL, RESOURCE_BASE_URL} from './../js/global-var'
 
 //eventLog 기록할 때 엑세스 토큰이 무효한 경우 리프레쉬 토큰으로 액세스 토큰 발급받는 로직
 function validateRefreshToken(refreshTkn, $router, $item){

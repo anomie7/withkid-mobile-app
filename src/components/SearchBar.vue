@@ -25,8 +25,9 @@
 import axios from "axios";
 import moment from "moment";
 import searchVue from '../pages/search.vue';
+import {RESOURCE_BASE_URL} from './../js/global-var'
 
-const BASE_URL = "http://www.localhost:8081"
+const BASE_URL = RESOURCE_BASE_URL;
 export default {
   // name: 'ComponentName',
   data () {
