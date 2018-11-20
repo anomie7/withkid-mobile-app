@@ -29,36 +29,14 @@
 <script>
 import axios from 'axios'
 import { SessionStorage, LocalStorage } from 'quasar'
-import  validateRefreshToken from "./auth.js";
+import  {validateRefreshToken, storeEventLog} from "./auth.js";
 
 export default {
   name: 'SearchItem',
   props: ["item"],
   methods: {
-    storeLog(e){
-      let access = SessionStorage.get.item('accessToken');
-      let $this = this;
-       axios({
-        method: 'post',
-        url: '/eventLog',
-        headers: {
-          'Authorization': access
-        },
-        data: {
-           ...$this.item
-        },
-        baseURL: $this.hostDomain
-      }).then(function(res){
-        console.log(res.data)
-      })
-      .catch(function(err){
-        console.log(err.response.data)
-        if(err.response.status == 401){
-          let refresh = LocalStorage.get.item('refreshToken')
-          console.log('401 error')
-          validateRefreshToken.apply($this, refresh);
-        }
-      })
+    storeLog(){
+      storeEventLog(this.item, this.$router);
     }
   },
   computed: {
