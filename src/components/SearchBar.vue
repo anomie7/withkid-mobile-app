@@ -169,7 +169,11 @@ export default {
         param.startDate = startOfNext.format();
         param.endDate = endOfNext.format();
       }
-  }
+  },
+  created() {
+    this.getThisMonth();
+    this.searchItem();
+  },
 }
 </script>
 
