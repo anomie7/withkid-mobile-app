@@ -31,8 +31,9 @@
   import axios from "axios";
   import SearchComponent from "../pages/search";
   import SearchBar from '../components/SearchBar.vue'
-  
-  axios.defaults.baseURL = "http://localhost:8081/";
+  import {RESOURCE_BASE_URL} from './../js/global-var'
+
+  const BASE_URL = RESOURCE_BASE_URL;
   export default {
     name: "SearchLayout",
     data() {
@@ -70,7 +71,8 @@
         let $this = this;
         axios
           .get("/event", {
-            params: $this.searchParam
+            params: $this.searchParam,
+             baseURL: BASE_URL
           })
           .then(function(res) {
             let $event = res.data;
@@ -92,7 +94,6 @@
       }
     },
     created() {
-      this.search();
     },
     components: {
       SearchComponent,
