@@ -58,7 +58,10 @@ export default {
   padding: 0px;
 }
 .q-card-title{
+  height: 4rem;
+  overflow: hidden;
   font-size: 13px;
+  line-height: 1.2rem;
 }
 .q-card-subtitle, .q-card-title-extra{
   font-size: 12px;
