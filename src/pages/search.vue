@@ -33,9 +33,6 @@ export default {
   margin: 0 auto;
   margin-bottom: 0.5rem;
 }
-.q-card-media > img {
-  height: 20rem;
-}
 .price {
   font-size: 1.1em;
   padding-left: 1.2em;

@@ -2,7 +2,7 @@
   <div>
     <div @click="storeLog">
       <q-card-media :height="150">
-          <img :src="imgUrl">
+          <img :src="imgUrl" :style="mediaImgHeight">
       </q-card-media>
         <q-card-title>
            {{item.name}}
@@ -62,11 +62,15 @@ export default {
   },
   data () {
     return {
-       hostDomain: RESOURCE_BASE_URL
+       hostDomain: RESOURCE_BASE_URL,
+       mediaImgHeight: {
+         height: '20rem'
+       }
     }
   }
 }
 </script>
 
 <style>
+
 </style>
