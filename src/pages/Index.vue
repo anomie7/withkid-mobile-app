@@ -45,6 +45,7 @@
 
 <script>
   import contentSwiper from "./../components/contentSwiperComponent";
+  import {RESOURCE_BASE_URL} from './../js/global-var'
   import { SessionStorage} from 'quasar';
   import axios from 'axios';
   export default {
@@ -56,7 +57,7 @@
     },
     methods: {
       getLatestEvents() {
-        const BASE_URL = "http://www.localhost:8081";
+        const BASE_URL = RESOURCE_BASE_URL;
         let accessTkn = SessionStorage.get.item('accessToken');
         let $this = this;
         axios.get('/eventLog', {

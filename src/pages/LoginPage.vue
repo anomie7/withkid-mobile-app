@@ -9,14 +9,14 @@
 
 <script>
   import axios from 'axios';
-  
+  import {AUTH_BASE_URL} from './../js/global-var'
   import {
     LocalStorage,
     SessionStorage
   } from 'quasar';
   
   
-  const BASE_URL = "http://www.localhost:8082";
+  const BASE_URL = AUTH_BASE_URL;
   export default {
     // name: 'PageName',
     data() {
