@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import {RESOURCE_BASE_URL} from './../js/global-var'
+  import {IMAGE_BASE_URL} from './../js/global-var'
 
   export default {
     name: "ContentSwiper",
@@ -41,7 +41,7 @@
           }
         },
         opened: false,
-        BASE_URL: RESOURCE_BASE_URL,
+        BASE_URL: IMAGE_BASE_URL,
         mediaImgHeight: {
           height: '10rem'
         }

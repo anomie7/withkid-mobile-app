@@ -31,6 +31,7 @@ import axios from 'axios'
 import { SessionStorage, LocalStorage } from 'quasar'
 import {validateRefreshToken, storeEventLog} from "./SearchItemMethods";
 import {RESOURCE_BASE_URL} from './../js/global-var';
+import {IMAGE_BASE_URL} from './../js/global-var';
 
 export default {
   name: 'SearchItem',
@@ -62,7 +63,7 @@ export default {
   },
   data () {
     return {
-       hostDomain: RESOURCE_BASE_URL,
+       hostDomain: IMAGE_BASE_URL,
        mediaImgHeight: {
          height: '20rem'
        }
