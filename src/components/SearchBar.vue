@@ -120,6 +120,11 @@ export default {
             $this.$emit('searchBarClick', returnVal);
           })
           .catch(function(error) {
+            if(error.response.status == 404){
+              // console.log(error.response.data.msg);
+              $this.$emit('eventNotFound', error.response.data);
+              return;
+            }
             console.log(error);
           });
       },

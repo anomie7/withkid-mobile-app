@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf" @scroll="scrolled">
     <q-layout-header reveal>
       <q-toolbar color="blue" text-color="dark">
-        <search-bar @searchBarClick="receiveSearchbarRes"></search-bar>
+        <search-bar @searchBarClick="receiveSearchbarRes" @eventNotFound="eventNotFound"></search-bar>
       </q-toolbar>
     </q-layout-header>
   
@@ -91,6 +91,11 @@
         this.hasNextPage = $data.hasNextPage;
         this.events = $data.events;
         this.searchParam = $data.searchParam;
+      },
+      eventNotFound(response){
+        console.log(response.msg);
+        this.events = [];
+        this.hasNextPage = false;
       }
     },
     created() {
