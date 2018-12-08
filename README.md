@@ -22,16 +22,18 @@ Windows:
 npm instal
 ```
 
-## Development setup (spa)
+## start the development serve (using quasar-cli)
 
 ```sh
-npm install
 quasar dev
 ```
+
 ## Build for spa
 ```sh
 quasar build
 ```
+
+[more infomation](https://quasar-framework.org/guide/quasar-cli.html)
 ## Power By
 
 [quasar framework](https://github.com/quasarframework/quasar)
