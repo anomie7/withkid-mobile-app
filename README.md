@@ -44,4 +44,4 @@ quasar build
 
 MinWoo Youn – anomie7777@gmail.com
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+[https://github.com/anomie7](https://github.com/anomie7)
