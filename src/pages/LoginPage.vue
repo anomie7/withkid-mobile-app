@@ -4,6 +4,9 @@
     <input type="email" v-model="user.email" />
     <input type="password" v-model="user.password">
     <button @click="login">login</button>
+    <div style="padding-top: 20px">demo User</div>
+    <div>Id: test</div>
+    <div>password: 1234</div>
   </div>
 </template>
 
@@ -29,6 +32,10 @@
     },
     methods: {
       login() {
+        if(this.userValidate(this.user)){
+          return;
+        }
+
         let $this = this;
         axios.post('/login', {
             ...$this.user
@@ -45,12 +52,30 @@
             $this.$router.replace('/')
           })
           .catch(function(err) {
+            let responseData = err.response.data;
+            if(responseData.name == "UserNotFoundException"){
+              alert(responseData.msg)
+              return;
+            }
             console.error(err);
           })
       },
       storeToken(access, refresh) {
         LocalStorage.set("refreshToken", refresh);
         SessionStorage.set("accessToken", access);
+      },
+      userValidate(user){
+         if(this.isEmpty(user.email) || this.isEmpty(user.password)){
+          alert('입력되지 않은 값이 있습니다.');
+          return true;
+        }
+        return false;
+      },
+      isEmpty(value){
+        if(value == null || value == ''){
+          return true;
+        }
+        return false;
       }
     }
   }
