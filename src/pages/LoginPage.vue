@@ -57,6 +57,11 @@
               alert(responseData.msg)
               return;
             }
+
+            if(responseData.name = "PasswordNotMatchException"){
+              alert(responseData.msg);
+              return;
+            }
             console.error(err);
           })
       },
