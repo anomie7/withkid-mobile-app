@@ -11,7 +11,7 @@
         몰라 3
       </q-carousel-slide>
     </q-carousel>
-    <content-swiper v-for="k in [1, 2]" :event-log="latestClickLOgs" :key="k"></content-swiper>
+    <content-swiper v-for="k in [1, 2]" :event-log="latestClickLogs" :key="k"></content-swiper>
     <div style="padding: 10px;">
       <div class="main-footer">
         <ul style="padding: 0 10px;margin: 0;">
@@ -52,7 +52,7 @@
     name: "PageIndex",
     data() {
       return {
-        latestClickLOgs: null
+        latestClickLogs: null
       };
     },
     methods: {
@@ -66,7 +66,7 @@
           },
            baseURL: BASE_URL
         }).then((result) => {
-          $this.latestClickLOgs = result.data; 
+          $this.latestClickLogs = result.data; 
         }).catch((err) => {
           console.log(err);
         });
