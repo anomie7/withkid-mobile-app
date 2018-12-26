@@ -1,7 +1,7 @@
 //production
-const AUTH_BASE_URL = "http://52.79.118.191:8090";
-const RESOURCE_BASE_URL = "http://52.79.118.191:8081";
-const IMAGE_BASE_URL = "http://52.79.118.191:37772";
+const AUTH_BASE_URL = "http://withkid.tk:8090";
+const RESOURCE_BASE_URL = "http://withkid.tk:8081";
+const IMAGE_BASE_URL = "http://withkid.tk:37772";
 
 // dev
 // const AUTH_BASE_URL = "http://localhost:8082";
