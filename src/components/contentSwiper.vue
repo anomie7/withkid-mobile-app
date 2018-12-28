@@ -22,8 +22,8 @@
     <q-modal v-model="opened">
       <div class="content-view">
         <div class="top">
-          <!-- 이미지, 이미지 위에 뱃지 형태로 카테고리,이름, 시작 날짜, 끝 날짜, 장소(링크로 네이버 주소 검색창 띄워줌) -->
           <img :src="imgPath" alt class="image">
+          <!-- 이미지, 이미지 위에 뱃지 형태로 카테고리,이름, 시작 날짜, 끝 날짜, 장소(링크로 네이버 주소 검색창 띄워줌) -->
           <div style="padding: 1rem;">
             <div class="category">{{category}}</div>
           </div>
@@ -166,14 +166,17 @@ export default {
 .content-view div.category {
   position: absolute !important;
   text-align: center;
-  background-color: blanchedalmond;
-  border-radius: 1rem;
+  background-color: coral;
+  padding: 0.1rem;
+  border-radius: 0.5rem;
 }
-
 .content-view .top .description {
   display: flex;
   flex-direction: column;
-  padding-left: 1rem;
+  background-color: wheat;
+  margin: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
 }
 .content-view .top .description div {
   margin-top: 0.8rem;
