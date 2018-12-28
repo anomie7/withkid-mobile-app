@@ -29,12 +29,12 @@ function validateRefreshToken(refreshTkn, $router, $item){
   }
 
   function storeEventLog($item, $router){
-    let access = SessionStorage.get.item('accessToken');
+    let accessTkn = SessionStorage.get.item('accessToken');
      axios({
       method: 'post',
       url: '/eventLog',
       headers: {
-        'Authorization': access
+        'Authorization': accessTkn
       },
       data: {
          ...$item
