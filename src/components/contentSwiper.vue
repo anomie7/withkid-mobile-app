@@ -33,7 +33,6 @@
             <div>
               <a
                 target="_blank"
-                :href="searchResult"
                 style="text-decoration: none"
               >{{selectedItem.location}}</a>
             </div>
@@ -41,7 +40,7 @@
         </div>
         <!-- 여기는 대표하는 price를 보여주고, 나머지는 접히는 박스 형태로 보여줄 것 -->
         <!-- 원래 출처로 보내주는 버튼 -->
-        <q-btn color="primary" @click="goOriginSite" label="예매처로 이동" style="width:95%; margin: 0.5rem;" ></q-btn>
+        <q-btn color="primary" @click="goToOriginSite" label="예매처로 이동" style="width:95%; margin: 0.5rem;" ></q-btn>
         <!-- 네이버 검색 버튼 -->
         <div class="close-btn" @click="opened = false" >X</div>
       </div>
@@ -56,19 +55,16 @@ export default {
   name: "ContentSwiper",
   props: ["eventLog"],
   methods: {
-    cardClick(seletedItem) {
       this.opened = true;
-      this.selectedItem = seletedItem;
     },
-    goOriginSite(){
-      window.open('http://www.daum.net ', '_blank'); 
+    goToOriginSite(){
+      window.open('http://ticket.interpark.com//Ticket/Goods/GoodsInfo.asp?GroupCode=' + this.selectedItem.interparkCode, '_blank'); 
     }
   },
   computed: {
     imgPath() {
       return this.BASE_URL + this.selectedItem.imageFilePath;
     },
-    searchResult() {
       return "https://www.google.com/maps?q=" + this.selectedItem.location;
     },
     category(){
