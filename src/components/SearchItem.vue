@@ -18,8 +18,8 @@
     </div>
         <q-list>
           <q-collapsible icon="payment" label="Price">
-            <div v-for="(p, i) of item.price" :key="i" class="price">
-              {{p.price}}원
+            <div v-for="(p, i) of getDefaultPrice()" :key="i" class="price">
+              {{p.ticketInfo}} {{p.price}}원
             </div>
           </q-collapsible>
         </q-list>
@@ -39,7 +39,16 @@ export default {
   methods: {
     storeLog(){
       storeEventLog(this.item, this.$router);
-    }
+    },
+    getDefaultPrice(){
+      let defaultPrices = this.item.price.filter(p => p.defaultPrice == true);
+
+      if(defaultPrices.length == 0){
+        defaultPrices = this.item.price.filter(p => p.extraInfo == "기본할인");
+      }
+
+      return defaultPrices;
+    },
   },
   computed: {
     imgUrl(){
