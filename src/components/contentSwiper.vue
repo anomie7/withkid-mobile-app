@@ -33,6 +33,7 @@
             <div>
               <a
                 target="_blank"
+                :href="searchLocation"
                 style="text-decoration: none"
               >{{selectedItem.location}}</a>
             </div>
@@ -55,7 +56,9 @@ export default {
   name: "ContentSwiper",
   props: ["eventLog"],
   methods: {
+    cardClick(selectedItem) {
       this.opened = true;
+      this.selectedItem = selectedItem;
     },
     goToOriginSite(){
       window.open('http://ticket.interpark.com//Ticket/Goods/GoodsInfo.asp?GroupCode=' + this.selectedItem.interparkCode, '_blank'); 
@@ -65,6 +68,7 @@ export default {
     imgPath() {
       return this.BASE_URL + this.selectedItem.imageFilePath;
     },
+    searchLocation() {
       return "https://www.google.com/maps?q=" + this.selectedItem.location;
     },
     category(){
