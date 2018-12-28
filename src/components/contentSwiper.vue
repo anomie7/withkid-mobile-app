@@ -43,6 +43,8 @@
         <!-- 원래 출처로 보내주는 버튼 -->
         <q-btn color="primary" @click="goToOriginSite" label="예매처로 이동" style="width:95%; margin: 0.5rem;" ></q-btn>
         <!-- 네이버 검색 버튼 -->
+        <q-btn color="green" @click="goToNaverBlogSearchResult" label="네이버 블로그 검색" style="width:95%; margin: 0.5rem;" ></q-btn>
+        
         <div class="close-btn" @click="opened = false" >X</div>
       </div>
     </q-modal>
@@ -62,6 +64,9 @@ export default {
     },
     goToOriginSite(){
       window.open('http://ticket.interpark.com//Ticket/Goods/GoodsInfo.asp?GroupCode=' + this.selectedItem.interparkCode, '_blank'); 
+    },
+    goToNaverBlogSearchResult(){
+      window.open('https://search.naver.com/search.naver?where=post&sm=tab_jum&query=' + this.selectedItem.name, '_blank'); 
     }
   },
   computed: {
