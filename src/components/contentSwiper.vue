@@ -30,6 +30,7 @@
           <div class="description">
             <div>{{selectedItem.name}}</div>
             <div>{{selectedItem.startDate}} ~ {{selectedItem.endDate}}</div>
+            <div style="color: red">최저가 {{minPrice}}원</div>
             <div>
               <a
                 target="_blank"
@@ -38,13 +39,20 @@
               >{{selectedItem.location}}</a>
             </div>
           </div>
+          <div class="price-list">
+              <q-list>
+                <q-collapsible separator v-for="(groupByprice, index) in groupByPrices" :key="index" icon="" :label="groupByprice[0]">
+                  <div v-for="(p, i) of groupByprice[1]" :key="i" class="">
+                    {{p.extraInfo}} {{p.price}}원
+                  </div>
+                </q-collapsible>
+            </q-list>
+          </div>
         </div>
-        <!-- 여기는 대표하는 price를 보여주고, 나머지는 접히는 박스 형태로 보여줄 것 -->
         <!-- 원래 출처로 보내주는 버튼 -->
-        <q-btn color="primary" @click="goToOriginSite" label="예매처로 이동" style="width:95%; margin: 0.5rem;" ></q-btn>
+        <q-btn color="primary" @click="goToOriginSite" label="예매처로 이동" style="width:90%; margin: 0 1rem;" ></q-btn>
         <!-- 네이버 검색 버튼 -->
-        <q-btn color="green" @click="goToNaverBlogSearchResult" label="네이버 블로그 검색" style="width:95%; margin: 0.5rem;" ></q-btn>
-        
+        <q-btn color="green" @click="goToNaverBlogSearchResult" label="네이버 블로그 검색" style="width:90%; margin: 1rem;" ></q-btn>
         <div class="close-btn" @click="opened = false" >X</div>
       </div>
     </q-modal>
@@ -57,16 +65,69 @@ import { IMAGE_BASE_URL } from "./../js/global-var";
 export default {
   name: "ContentSwiper",
   props: ["eventLog"],
+   data() {
+    return {
+      selectedItem: {
+        eventId: null,
+        imageFilePath: "",
+        kindOf: "",
+        location: "",
+        name: "",
+        startDate: null,
+        endDate: null
+      },
+      minPrice: 0,
+      groupByPrices: null,
+      swiperOption: {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        slidesOffsetBefore: 10,
+        slidesOffsetAfter: 10,
+        pagination: {
+          el: "",
+          clickable: true
+        }
+      },
+      opened: false,
+      BASE_URL: IMAGE_BASE_URL,
+      mediaImgHeight: {
+        height: "10rem"
+      }
+    };
+  },
   methods: {
     cardClick(selectedItem) {
       this.opened = true;
       this.selectedItem = selectedItem;
+      this.minPrice = this.getMinPrice();
+      this.groupByPrices = Array.from(this.getGroupByPrice());
     },
     goToOriginSite(){
       window.open('http://ticket.interpark.com//Ticket/Goods/GoodsInfo.asp?GroupCode=' + this.selectedItem.interparkCode, '_blank'); 
     },
     goToNaverBlogSearchResult(){
-      window.open('https://search.naver.com/search.naver?where=post&sm=tab_jum&query=' + this.selectedItem.name, '_blank'); 
+      window.open('https://search.naver.com/search.naver?where=post&sm=tab_jum&query=' + this.selectedItem.interparkCode, '_blank'); 
+    },
+    getMinPrice(){
+      let prices = this.selectedItem.price.map(p => p.price);
+      return Math.min.apply(null, prices);
+    },
+    getGroupByPrice(){
+      let ticketInfo = new Set();
+      this.selectedItem.price.forEach(p => {
+        ticketInfo.add(p.ticketInfo)
+      });
+      let result = new Map();
+      for(let info of ticketInfo.values()){
+        let tmp = new Array();
+        this.selectedItem.price.forEach(item => {
+          if(info == item.ticketInfo){
+            tmp.push(item);
+          }
+        })
+        result.set(info, tmp);
+      }
+      return result;
     }
   },
   computed: {
@@ -91,34 +152,6 @@ export default {
           break;
       }
     }
-  },
-  data() {
-    return {
-      selectedItem: {
-        eventId: null,
-        imageFilePath: "",
-        kindOf: "",
-        location: "",
-        name: "",
-        startDate: null,
-        endDate: null
-      },
-      swiperOption: {
-        slidesPerView: 3,
-        spaceBetween: 20,
-        slidesOffsetBefore: 10,
-        slidesOffsetAfter: 10,
-        pagination: {
-          el: "",
-          clickable: true
-        }
-      },
-      opened: false,
-      BASE_URL: IMAGE_BASE_URL,
-      mediaImgHeight: {
-        height: "10rem"
-      }
-    };
   }
 };
 </script>
@@ -179,8 +212,12 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: wheat;
-  margin: 0.5rem;
+  margin: 1rem;
   margin-top: 1rem;
+  border-radius: 0.5rem;
+}
+.content-view .top .price-list{
+  margin: 1rem;
   border-radius: 0.5rem;
 }
 .content-view .top .description div {
