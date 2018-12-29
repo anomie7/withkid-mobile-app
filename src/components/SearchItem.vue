@@ -16,13 +16,13 @@
         </q-card-main>
         <q-card-separator />
     </div>
-        <q-list>
-          <q-collapsible icon="payment" label="Price">
-            <div v-for="(p, i) of getDefaultPrice()" :key="i" class="price">
-              {{p.ticketInfo}} {{p.price}}원
-            </div>
-          </q-collapsible>
-        </q-list>
+    <q-list>
+      <q-collapsible icon="payment" label="Price">
+        <div v-for="(p, i) of getDefaultPrice()" :key="i" class="price">
+          {{p.ticketInfo}} {{p.price}}원
+        </div>
+      </q-collapsible>
+    </q-list>
   </div>
 </template>
 
