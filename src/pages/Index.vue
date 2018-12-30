@@ -44,7 +44,7 @@
 </style>
 
 <script>
-  import contentSwiper from "./../components/contentSwiper";
+  import contentSwiper from "./../components/ContentSwiper";
   import {RESOURCE_BASE_URL} from './../js/global-var'
   import { SessionStorage} from 'quasar';
   import axios from 'axios';
