@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="storeLog">
+    <div @click="showModal">
       <q-card-media :height="150">
           <img :src="imgUrl" :style="mediaImgHeight">
       </q-card-media>
@@ -39,6 +39,10 @@ export default {
   methods: {
     storeLog(){
       storeEventLog(this.item, this.$router);
+    },
+    showModal(){
+      this.storeLog();
+      this.$emit('modalOpen', true, this.item);
     },
     getDefaultPrice(){
       let defaultPrices = this.item.price.filter(p => p.defaultPrice == true);
