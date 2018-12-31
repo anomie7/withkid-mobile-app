@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="storeLog">
+    <div @click="showModal">
       <q-card-media :height="150">
           <img :src="imgUrl" :style="mediaImgHeight">
       </q-card-media>
@@ -16,13 +16,13 @@
         </q-card-main>
         <q-card-separator />
     </div>
-        <q-list>
-          <q-collapsible icon="payment" label="Price">
-            <div v-for="(p, i) of item.price" :key="i" class="price">
-              {{p.price}}원
-            </div>
-          </q-collapsible>
-        </q-list>
+    <q-list>
+      <q-collapsible icon="payment" label="Price">
+        <div v-for="(p, i) of getDefaultPrice()" :key="i" class="price">
+          {{p.ticketInfo}} {{p.price}}원
+        </div>
+      </q-collapsible>
+    </q-list>
   </div>
 </template>
 
@@ -39,7 +39,20 @@ export default {
   methods: {
     storeLog(){
       storeEventLog(this.item, this.$router);
-    }
+    },
+    showModal(){
+      this.storeLog();
+      this.$emit('modalOpen', true, this.item);
+    },
+    getDefaultPrice(){
+      let defaultPrices = this.item.price.filter(p => p.defaultPrice == true);
+
+      if(defaultPrices.length == 0){
+        defaultPrices = this.item.price.filter(p => p.extraInfo == "기본할인");
+      }
+
+      return defaultPrices;
+    },
   },
   computed: {
     imgUrl(){
