@@ -7,7 +7,10 @@
 
 ![demomove](https://user-images.githubusercontent.com/26598127/49684454-7a54d680-fb17-11e8-8423-dac9dd4b685b.gif)
 
-![demomove2](https://user-images.githubusercontent.com/26598127/49684705-cead8580-fb1a-11e8-80b4-b85f6a27d70b.gif)
+![4](https://user-images.githubusercontent.com/26598127/50561921-ef03e500-0d52-11e9-8953-907bf6fa0b89.gif)  
+
+![5](https://user-images.githubusercontent.com/26598127/50561939-10fd6780-0d53-11e9-9961-d335bea3f230.gif)  
+
 ## Installation
 
 OS X & Linux:
