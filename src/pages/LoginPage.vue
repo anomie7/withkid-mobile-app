@@ -11,9 +11,16 @@
         size="lg"
         label="facebook으로 시작하기"
       />
-      <div style="padding-top: 20px">demo User</div>
-      <div>Id: test</div>
-      <div>password: 1234</div>
+      <div>
+        <div style="padding-top: 20px">demo email User</div>
+        <div>Id: test</div>
+        <div>password: 1234</div>
+      </div>
+      <div>
+        <div style="padding-top: 20px">demo facebook user</div>
+        <div>email: uzmnobofjr_1550131691@tfbnw.net</div>
+        <div>password: asd1212</div>
+      </div>
     </div>
   </q-layout>
 </template>
@@ -75,45 +82,61 @@ export default {
           console.error(err);
         });
     },
-    facebookLogin() {
-      this.getFacebookAuthUrl(this.temporaryCode);
-    },
-    async getFacebookAuthUrl(temporaryCode) {
+    async facebookLogin() {
+      let tokens = { accessToken: "", refreshToken: "" };
       try {
-        let url = await axios.get("/authURL", {
-          params: { temporaryCode: temporaryCode },
-          baseURL: AUTH_BASE_URL
-        });
-
-        let windowReference = window.open(
-          url.data,
-          "_blank",
-          "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes"
-        );
-        setTimeout(async () => {
-          await this.getTokensByFireStore(temporaryCode, windowReference);
-        }, 2500);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async getTokensByFireStore(temporaryCode, windowReference) {
-      try {
-        let result = await axios.get("/authtoken", {
-          params: { temporaryCode: temporaryCode },
-          baseURL: AUTH_BASE_URL
-        });
-        this.storeToken(
-          result.data["accessToken"],
-          result.data["refreshToken"]
-        );
-        windowReference.close();
+        let windowReference = await this.getFacebookAuthUrl(this.temporaryCode);
+        while (tokens.accessToken == "" && tokens.refreshToken == "") {
+          tokens = await this.getTokensByFireStore(
+            this.temporaryCode,
+            windowReference
+          );
+        }
+        this.storeToken(tokens.accessToken, tokens.refreshToken);
         this.$router.replace("/");
+        windowReference.close();
       } catch (error) {
         console.error(error);
       }
+    },
+    getFacebookAuthUrl(temporaryCode) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          let url = await axios.get("/authURL", {
+            params: { temporaryCode: temporaryCode },
+            baseURL: AUTH_BASE_URL
+          });
+          let windowReference = window.open(
+            url.data,
+            "_blank",
+            "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes"
+          );
+          resolve(windowReference);
+        } catch (error) {
+          console.error(error);
+          reject(error);
+        }
+      });
+    },
+    getTokensByFireStore(temporaryCode, windowReference) {
+      return new Promise((resolve, reject) => {
+        try {
+          axios
+            .get("/authtoken", {
+              params: { temporaryCode: temporaryCode },
+              baseURL: AUTH_BASE_URL
+            })
+            .then(result => {
+              resolve(result.data);
+            });
+        } catch (error) {
+          console.error(error);
+          reject(error);
+        }
+      });
     },
     storeToken(access, refresh) {
+      console.log(6);
       LocalStorage.set("refreshToken", refresh);
       SessionStorage.set("accessToken", access);
     },
