@@ -127,7 +127,9 @@ export default {
               baseURL: AUTH_BASE_URL
             })
             .then(result => {
-              resolve(result.data);
+              setTimeout(function() {
+                resolve(result.data);
+              }, 1500);
             });
         } catch (error) {
           console.error(error);
