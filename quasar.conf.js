@@ -58,17 +58,16 @@ module.exports = function(ctx) {
         "QCardMedia",
         "QCardSeparator",
         "QCardActions",
-        'QModal',
-        'QDatetime',
-        'QCollapsible',
-        'QSelect',
-        'QChip'
+        "QModal",
+        "QDatetime",
+        "QCollapsible",
+        "QSelect",
+        "QChip",
+        "QInput"
       ],
-      directives: ["Ripple", "BackToTop", 'Scroll'],
+      directives: ["Ripple", "BackToTop", "Scroll"],
       // Quasar plugins
-      plugins: ["Notify",     
-      'LocalStorage',
-      'SessionStorage']
+      plugins: ["Notify", "LocalStorage", "SessionStorage"]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language
     },
