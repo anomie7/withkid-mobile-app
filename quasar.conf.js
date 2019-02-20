@@ -3,7 +3,7 @@
 module.exports = function(ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: [],
+    plugins: ["vuelidate"],
     css: ["app.styl"],
     extras: [
       ctx.theme.mat ? "roboto-font" : null,
@@ -63,7 +63,8 @@ module.exports = function(ctx) {
         "QCollapsible",
         "QSelect",
         "QChip",
-        "QInput"
+        "QInput",
+        "QField"
       ],
       directives: ["Ripple", "BackToTop", "Scroll"],
       // Quasar plugins
