@@ -14,7 +14,7 @@
       <q-field
         color="black"
         :error="$v.user.password.$error"
-        helper="6자 이상"
+        helper="비밀번호는 6자 이상 "
         :error-label="passwordErrorMsg"
       >
         <q-input
@@ -34,9 +34,17 @@
           type="password"
           float-label="repeatPassword"
           v-model.trim.lazy="$v.user.repeatPassword.$model"
+          @keyup.enter="join"
         />
       </q-field>
-      <q-btn class="full-width join-btn" @click="join" color="positive" size="lg" label="join"/>
+      <q-btn
+        class="full-width join-btn"
+        @click="join"
+        :disable="pending"
+        color="positive"
+        size="lg"
+        label="join"
+      />
     </div>
   </q-layout>
 </template>
@@ -52,7 +60,8 @@ export default {
         email: "",
         password: "",
         repeatPassword: ""
-      }
+      },
+      pending: false
     };
   },
   computed: {
@@ -71,6 +80,9 @@ export default {
       }
     },
     repeatPasswordErrorMsg() {
+      if (!this.$v.user.repeatPassword.required) {
+        return "값을 입력해주세요";
+      }
       if (!this.$v.user.repeatPassword.sameAsPassword) {
         return "비밀번호가 일치하지 않습니다.";
       }
@@ -87,15 +99,48 @@ export default {
         minLength: minLength(6)
       },
       repeatPassword: {
+        required,
         sameAsPassword: sameAs("password")
       }
     }
   },
   methods: {
-    join() {
+    async join() {
       if (this.$v.$invalid) {
         alert("입력값을 다시 확인해보세요");
+      } else {
+        this.pending = true;
+        try {
+          await this.submit(this.user);
+          this.user = { email: "", password: "", repeatPassword: "" };
+          this.pending = false;
+          alert("회원가입 완료! 로그인해주세요!");
+          this.$router.replace("/login");
+        } catch (error) {
+          console.error(error.response.data);
+          alert(error.response.data.msg);
+          this.user = { email: "", password: "", repeatPassword: "" };
+          this.pending = false;
+        }
       }
+    },
+    submit(user) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          let result = await axios({
+            method: "post",
+            url: "/join",
+            data: {
+              email: user.email,
+              password: user.password
+            },
+            baseURL: AUTH_BASE_URL
+          });
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      });
     }
   }
 };
