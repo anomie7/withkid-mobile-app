@@ -4,6 +4,7 @@ import {
   getAccessToken,
   getRefreshToken
 } from "./auth.js";
+import AccessToken from "./../pages/AccessToken.vue";
 
 const requireAuth = (to, from, next) => {
   console.log("start validate access token!");
@@ -43,6 +44,11 @@ const routes = [
   {
     path: "/join",
     component: () => import("pages/Join.vue")
+  },
+  {
+    path: "/accessToken",
+    component: AccessToken,
+    props: route => ({ query: route.query.code })
   }
 ];
 

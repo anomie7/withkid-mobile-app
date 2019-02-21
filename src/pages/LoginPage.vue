@@ -4,6 +4,7 @@
       <h1 style="margin: 100px auto;text-align:center;color:green">Login</h1>
       <q-input color="black" type="email" autofocus float-label="email" v-model="user.email"/>
       <q-input color="black" type="password" float-label="password" v-model="user.password"/>
+      <div class="q-caption" style="color:gray;margin-top:0.5rem" @click="goToJoinPage">이메일로 회원가입</div>
       <q-btn class="full-width login-btn" @click="login" color="primary" size="lg" label="login"/>
       <q-btn
         class="facebook-color full-width login-btn"
@@ -12,14 +13,9 @@
         label="facebook으로 시작하기"
       />
       <div>
-        <div style="padding-top: 20px">demo email User</div>
+        <div style="padding-top: 10px">demo email User</div>
         <div>Id: test</div>
         <div>password: 1234</div>
-      </div>
-      <div>
-        <div style="padding-top: 20px">demo facebook user</div>
-        <div>email: uzmnobofjr_1550131691@tfbnw.net</div>
-        <div>password: asd1212</div>
       </div>
     </div>
   </q-layout>
@@ -83,18 +79,14 @@ export default {
         });
     },
     async facebookLogin() {
+      alert(
+        "현재 개발 모드로 테스트용 계정으로만 로그인 가능합니다." +
+          "email: uzmnobofjr_1550131691@tfbnw.net password: asd1212"
+      );
       let tokens = { accessToken: "", refreshToken: "" };
       try {
-        let windowReference = await this.getFacebookAuthUrl(this.temporaryCode);
-        while (tokens.accessToken == "" && tokens.refreshToken == "") {
-          tokens = await this.getTokensByFireStore(
-            this.temporaryCode,
-            windowReference
-          );
-        }
-        this.storeToken(tokens.accessToken, tokens.refreshToken);
-        this.$router.replace("/");
-        windowReference.close();
+        let facebookAuthUrl = await this.getFacebookAuthUrl(this.temporaryCode);
+        window.location.href = facebookAuthUrl;
       } catch (error) {
         console.error(error);
       }
@@ -106,12 +98,7 @@ export default {
             params: { temporaryCode: temporaryCode },
             baseURL: AUTH_BASE_URL
           });
-          let windowReference = window.open(
-            url.data,
-            "_blank",
-            "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes"
-          );
-          resolve(windowReference);
+          resolve(url.data);
         } catch (error) {
           console.error(error);
           reject(error);
@@ -154,6 +141,9 @@ export default {
         return true;
       }
       return false;
+    },
+    goToJoinPage() {
+      this.$router.push("/join");
     }
   },
   created() {
@@ -177,7 +167,7 @@ body {
 }
 
 .login-container .login-btn {
-  margin-top: 1.2rem;
+  margin-top: 1rem;
 }
 
 .facebook-color {
