@@ -35,8 +35,7 @@ export default {
         email: null,
         password: null
       },
-      authUrl: "",
-      temporaryCode: null
+      authUrl: ""
     };
   },
   methods: {
@@ -85,17 +84,16 @@ export default {
       );
       let tokens = { accessToken: "", refreshToken: "" };
       try {
-        let facebookAuthUrl = await this.getFacebookAuthUrl(this.temporaryCode);
+        let facebookAuthUrl = await this.getFacebookAuthUrl();
         window.location.href = facebookAuthUrl;
       } catch (error) {
         console.error(error);
       }
     },
-    getFacebookAuthUrl(temporaryCode) {
+    getFacebookAuthUrl() {
       return new Promise(async (resolve, reject) => {
         try {
           let url = await axios.get("/authURL", {
-            params: { temporaryCode: temporaryCode },
             baseURL: AUTH_BASE_URL
           });
           resolve(url.data);
@@ -105,25 +103,7 @@ export default {
         }
       });
     },
-    getTokensByFireStore(temporaryCode, windowReference) {
-      return new Promise((resolve, reject) => {
-        try {
-          axios
-            .get("/authtoken", {
-              params: { temporaryCode: temporaryCode },
-              baseURL: AUTH_BASE_URL
-            })
-            .then(result => {
-              setTimeout(function() {
-                resolve(result.data);
-              }, 1500);
-            });
-        } catch (error) {
-          console.error(error);
-          reject(error);
-        }
-      });
-    },
+
     storeToken(access, refresh) {
       console.log(6);
       LocalStorage.set("refreshToken", refresh);
@@ -146,13 +126,7 @@ export default {
       this.$router.push("/join");
     }
   },
-  created() {
-    let temporaryCode = Math.random()
-      .toString(36)
-      .substring(2);
-    SessionStorage.set("temporaryCode", temporaryCode);
-    this.temporaryCode = temporaryCode;
-  }
+  created() {}
 };
 </script>
 
