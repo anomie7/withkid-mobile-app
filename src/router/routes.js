@@ -39,11 +39,13 @@ const routes = [
   },
   {
     path: "/login",
-    component: () => import("pages/LoginPage.vue")
+    component: () => import("layouts/OverflowHiddenLayout.vue"),
+    children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
   },
   {
     path: "/join",
-    component: () => import("pages/Join.vue")
+    component: () => import("layouts/OverflowHiddenLayout.vue"),
+    children: [{ path: "", component: () => import("pages/JoinPage.vue") }]
   },
   {
     path: "/accessToken",

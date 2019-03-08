@@ -1,24 +1,22 @@
 <template>
-  <q-layout>
-    <div class="login-container">
-      <h1 style="margin: 100px auto;text-align:center;color:green">Login</h1>
-      <q-input color="black" type="email" autofocus float-label="email" v-model="user.email"/>
-      <q-input color="black" type="password" float-label="password" v-model="user.password"/>
-      <div class="q-caption" style="color:gray;margin-top:0.5rem" @click="goToJoinPage">이메일로 회원가입</div>
-      <q-btn class="full-width login-btn" @click="login" color="primary" size="lg" label="login"/>
-      <q-btn
-        class="facebook-color full-width login-btn"
-        @click="facebookLogin"
-        size="lg"
-        label="facebook으로 시작하기"
-      />
-      <div>
-        <div style="padding-top: 10px">demo email User</div>
-        <div>Id: test</div>
-        <div>password: 1234</div>
-      </div>
+  <div>
+    <h1 style="margin: 100px auto;text-align:center;color:green">Login</h1>
+    <q-input color="black" type="email" autofocus float-label="email" v-model="user.email"/>
+    <q-input color="black" type="password" float-label="password" v-model="user.password"/>
+    <div class="q-caption" style="color:gray;margin-top:0.5rem" @click="goToJoinPage">이메일로 회원가입</div>
+    <q-btn class="full-width login-btn" @click="login" color="primary" size="lg" label="login"/>
+    <q-btn
+      class="facebook-color full-width login-btn"
+      @click="facebookLogin"
+      size="lg"
+      label="facebook으로 시작하기"
+    />
+    <div>
+      <div style="padding-top: 10px">demo email User</div>
+      <div>Id: test</div>
+      <div>password: 1234</div>
     </div>
-  </q-layout>
+  </div>
 </template>
 
 <script>
@@ -131,16 +129,7 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: aliceblue;
-  overflow: hidden;
-}
-.login-container {
-  margin: 0 auto;
-  width: 85%;
-}
-
-.login-container .login-btn {
+.login-btn {
   margin-top: 1rem;
 }
 

@@ -1,52 +1,50 @@
   <template>
-  <q-layout>
-    <div class="join-container">
-      <h1 style="margin: 100px auto;text-align:center;color:red">Join</h1>
-      <q-field color="black" :error="$v.user.email.$error" :error-label="emailErrorMsg">
-        <q-input
-          color="black"
-          type="email"
-          autofocus
-          float-label="email"
-          v-model.trim.lazy="$v.user.email.$model"
-        />
-      </q-field>
-      <q-field
+  <div>
+    <h1 style="margin: 100px auto;text-align:center;color:red">Join</h1>
+    <q-field color="black" :error="$v.user.email.$error" :error-label="emailErrorMsg">
+      <q-input
         color="black"
-        :error="$v.user.password.$error"
-        helper="비밀번호는 6자 이상 "
-        :error-label="passwordErrorMsg"
-      >
-        <q-input
-          color="black"
-          type="password"
-          float-label="password"
-          v-model.trim.lazy="$v.user.password.$model"
-        />
-      </q-field>
-      <q-field
-        color="black"
-        :error="$v.user.repeatPassword.$error"
-        :error-label="repeatPasswordErrorMsg"
-      >
-        <q-input
-          color="black"
-          type="password"
-          float-label="repeatPassword"
-          v-model.trim.lazy="$v.user.repeatPassword.$model"
-          @keyup.enter="join"
-        />
-      </q-field>
-      <q-btn
-        class="full-width join-btn"
-        @click="join"
-        :disable="pending"
-        color="positive"
-        size="lg"
-        label="join"
+        type="email"
+        autofocus
+        float-label="email"
+        v-model.trim.lazy="$v.user.email.$model"
       />
-    </div>
-  </q-layout>
+    </q-field>
+    <q-field
+      color="black"
+      :error="$v.user.password.$error"
+      helper="비밀번호는 6자 이상 "
+      :error-label="passwordErrorMsg"
+    >
+      <q-input
+        color="black"
+        type="password"
+        float-label="password"
+        v-model.trim.lazy="$v.user.password.$model"
+      />
+    </q-field>
+    <q-field
+      color="black"
+      :error="$v.user.repeatPassword.$error"
+      :error-label="repeatPasswordErrorMsg"
+    >
+      <q-input
+        color="black"
+        type="password"
+        float-label="repeatPassword"
+        v-model.trim.lazy="$v.user.repeatPassword.$model"
+        @keyup.enter="join"
+      />
+    </q-field>
+    <q-btn
+      class="full-width join-btn"
+      @click="join"
+      :disable="pending"
+      color="positive"
+      size="lg"
+      label="join"
+    />
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -146,16 +144,21 @@ export default {
 };
 </script>
 <style>
-body {
+.join-page-wrapper {
   background-color: aliceblue;
+  position: absolute;
+  width: 100%;
+}
+.join-page-wrapper .join-layout {
   overflow: hidden;
 }
+
 .join-container {
   margin: 0 auto;
   width: 85%;
 }
 
-.join-container .join-btn {
+.join-btn {
   margin-top: 1rem;
 }
 </style>
