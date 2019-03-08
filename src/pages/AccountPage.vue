@@ -7,19 +7,19 @@
 </template>
 
 <script>
-import { LocalStorage, SessionStorage } from 'quasar'
+import { LocalStorage, SessionStorage } from "quasar";
 
 export default {
-  name: 'PageUser',
+  name: "AccountPage",
   methods: {
-    logout(){
-      SessionStorage.remove('accessToken');
-      LocalStorage.remove('refreshToken');
+    logout() {
+      SessionStorage.remove("accessToken");
+      LocalStorage.remove("refreshToken");
       document.location.reload();
-      alert('로그아웃 되었습니다.')
+      alert("로그아웃 되었습니다.");
     }
   }
-}
+};
 </script>
 
 <style>
