@@ -27,8 +27,8 @@ const routes = [
     path: "/",
     component: () => import("layouts/MyLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/Index.vue") },
-      { path: "user", component: () => import("pages/account.vue") }
+      { path: "", component: () => import("pages/MainPage.vue") },
+      { path: "user", component: () => import("pages/AccountPage.vue") }
     ],
     beforeEnter: requireAuth
   },
