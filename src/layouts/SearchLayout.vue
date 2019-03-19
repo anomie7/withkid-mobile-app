@@ -98,8 +98,6 @@ export default {
         });
     },
     receiveSearchbarRes($data) {
-      console.log("handling searchBarClick event");
-      console.log($data);
       this.hasNextPage = $data.hasNextPage;
       this.events = $data.events;
       this.searchParam = $data.searchParam;
