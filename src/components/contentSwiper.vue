@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="swiper-container-title">최근 조회한 이벤트</div>
+    <div class="swiper-container-title">{{title}}</div>
     <swiper :options="swiperOption">
       <swiper-slide v-for="(item, i) in eventLog" :key="i">
         <q-card>
@@ -19,17 +19,23 @@
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
-    <content-modal :selectedItem="selectedItem" :opened="opened" :minPrice="minPrice" :groupByPrices="groupByPrices" @closeModal="closeModal"></content-modal>
+    <content-modal
+      :selectedItem="selectedItem"
+      :opened="opened"
+      :minPrice="minPrice"
+      :groupByPrices="groupByPrices"
+      @closeModal="closeModal"
+    ></content-modal>
   </div>
 </template>
 
 <script>
 import { IMAGE_BASE_URL } from "./../js/global-var";
-import ContentModal from './ContentModal';
+import ContentModal from "./ContentModal";
 export default {
   name: "ContentSwiper",
-  props: ["eventLog"],
-   data() {
+  props: ["eventLog", "title"],
+  data() {
     return {
       selectedItem: {
         eventId: null,
@@ -66,32 +72,32 @@ export default {
       this.minPrice = this.getMinPrice();
       this.groupByPrices = Array.from(this.getGroupByPrice());
     },
-    closeModal(param){
+    closeModal(param) {
       this.opened = param;
     },
-    getMinPrice(){
+    getMinPrice() {
       let prices = this.selectedItem.price.map(p => p.price);
       return Math.min.apply(null, prices);
     },
-    getGroupByPrice(){
+    getGroupByPrice() {
       let ticketInfo = new Set();
       this.selectedItem.price.forEach(p => {
-        ticketInfo.add(p.ticketInfo)
+        ticketInfo.add(p.ticketInfo);
       });
       let result = new Map();
-      for(let info of ticketInfo.values()){
+      for (let info of ticketInfo.values()) {
         let tmp = new Array();
         this.selectedItem.price.forEach(item => {
-          if(info == item.ticketInfo){
+          if (info == item.ticketInfo) {
             tmp.push(item);
           }
-        })
+        });
         result.set(info, tmp);
       }
       return result;
     }
   },
-  components: {ContentModal}
+  components: { ContentModal }
 };
 </script>
 
