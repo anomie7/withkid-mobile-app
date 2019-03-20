@@ -22,9 +22,9 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import { RESOURCE_BASE_URL } from "./../js/global-var";
+import { SessionStorage } from "quasar";
+import { RESOURCE_BASE_URL, USERLOG_BASE_URL } from "./../js/global-var";
 
-const BASE_URL = RESOURCE_BASE_URL;
 export default {
   // name: 'ComponentName',
   data() {
@@ -100,32 +100,48 @@ export default {
     };
   },
   methods: {
-    searchItem() {
-      console.log("send request to server");
-      let $this = this;
+    async searchItem() {
+      // console.log("send request to server");
       let $searchParam = Object.assign({}, this.searchParam);
-      axios
-        .get("/event", {
+      try {
+        let res = await axios.get("/event", {
           params: $searchParam,
-          baseURL: BASE_URL
-        })
-        .then(function(res) {
-          console.log("receive 500 code");
-          let returnVal = {
-            events: res.data.events,
-            searchParam: $searchParam,
-            hasNextPage: res.data.hasNextPage
-          };
-          $this.$emit("searchBarClick", returnVal);
-        })
-        .catch(function(error) {
-          if (error.response.status == 404) {
-            // console.log(error.response.data.msg);
-            $this.$emit("eventNotFound", error.response.data);
-            return;
-          }
-          console.log(error);
+          baseURL: RESOURCE_BASE_URL
         });
+        let accessToken = SessionStorage.get.item("accessToken");
+        this.saveSearchLog(accessToken, $searchParam);
+        let returnVal = {
+          events: res.data.events,
+          searchParam: $searchParam,
+          hasNextPage: res.data.hasNextPage
+        };
+        this.$emit("searchBarClick", returnVal);
+      } catch (error) {
+        let res = error.response;
+        if (res.status == 404) {
+          console.error(res.data.msg);
+          this.$emit("eventNotFound", res.data);
+          return;
+        }
+        console.error(error);
+      }
+    },
+    async saveSearchLog(accessToken, searchParam) {
+      try {
+        await axios({
+          method: "post",
+          url: "/searchLog",
+          headers: {
+            Authorization: accessToken
+          },
+          data: {
+            ...searchParam
+          },
+          baseURL: USERLOG_BASE_URL
+        });
+      } catch (error) {
+        console.error(error.response.data.msg);
+      }
     },
     containerPull(event) {
       console.log(event);
