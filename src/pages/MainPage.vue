@@ -5,7 +5,8 @@
       <q-carousel-slide class="bg-secondary">기획전 2</q-carousel-slide>
       <q-carousel-slide class="bg-tertiary">몰라 3</q-carousel-slide>
     </q-carousel>
-    <content-swiper v-for="k in [1]" :event-log="latestClickLogs" :key="k"></content-swiper>
+    <content-swiper v-for="k in [1]" :event-log="latestClickLogs" title="최근 조회한 이벤트" :key="k"></content-swiper>
+    <content-swiper v-for="k in [2]" :event-log="searchQuration" title="선호하는 조건의 이벤트" :key="k"></content-swiper>
     <div style="padding: 10px;">
       <div class="main-footer">
         <ul style="padding: 0 10px;margin: 0;">footer
@@ -38,38 +39,82 @@
 
 <script>
 import contentSwiper from "./../components/ContentSwiper";
-import { RESOURCE_BASE_URL } from "./../js/global-var";
+import { RESOURCE_BASE_URL, USERLOG_BASE_URL } from "./../js/global-var";
 import { SessionStorage } from "quasar";
+import SearchLog from "./../domain/SearchLog.js";
+import moment from "moment";
 import axios from "axios";
 export default {
   name: "PageIndex",
   data() {
     return {
-      latestClickLogs: null
+      latestClickLogs: null,
+      searchQuration: null
     };
   },
   methods: {
-    async getLatestEvents() {
-      const BASE_URL = RESOURCE_BASE_URL;
-      let accessTkn = SessionStorage.get.item("accessToken");
+    async getLatestEvents(accessTkn) {
       try {
         let result = await axios.get("/eventLog", {
           headers: {
             Authorization: accessTkn
           },
-          baseURL: BASE_URL
+          baseURL: RESOURCE_BASE_URL
         });
-        this.latestClickLogs = result.data;
+        return result.data;
       } catch (error) {
         console.error(error);
       }
+    },
+    async getRecentMaxSearchLog(accessTkn) {
+      let result = await axios.get("/maxSearchLogKey", {
+        headers: {
+          Authorization: accessTkn
+        },
+        baseURL: USERLOG_BASE_URL
+      });
+      return result.data;
+    },
+    async getSearchQuration(accessTkn) {
+      let searchParam = new SearchLog(
+        null,
+        null,
+        moment().format(),
+        moment()
+          .endOf("month")
+          .format(),
+        15
+      );
+
+      try {
+        let maxSearchKeys = await this.getRecentMaxSearchLog(accessTkn);
+
+        if (maxSearchKeys.region == "전체") {
+          maxSearchKeys.region = null;
+        }
+
+        if (maxSearchKeys.kindOf == "전체") {
+          maxSearchKeys.kindOf = null;
+        }
+
+        searchParam.addCondition(maxSearchKeys.region, maxSearchKeys.kindOf);
+      } catch (error) {
+        console.error(error);
+      }
+      let res = await axios.get("/event", {
+        params: searchParam,
+        baseURL: RESOURCE_BASE_URL
+      });
+      return res.data.events;
     }
+  },
+  async created() {
+    let accessTkn = SessionStorage.get.item("accessToken");
+    this.latestClickLogs = await this.getLatestEvents(accessTkn);
+    this.searchQuration = await this.getSearchQuration(accessTkn);
   },
   components: {
     contentSwiper
-  },
-  created() {
-    this.getLatestEvents();
   }
 };
 </script>
