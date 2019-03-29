@@ -5,11 +5,17 @@
       <q-carousel-slide class="bg-secondary">기획전 2</q-carousel-slide>
       <q-carousel-slide class="bg-tertiary">몰라 3</q-carousel-slide>
     </q-carousel>
-    <content-swiper v-for="k in [1]" :event-log="latestClickLogs" title="최근 조회한 이벤트" :key="k"></content-swiper>
+    <content-swiper
+      v-for="k in [1]"
+      :event-log="latestClickLogs.events"
+      :title="latestClickLogs.title"
+      :key="k"
+    ></content-swiper>
     <content-swiper v-for="k in [2]" :event-log="searchQuration" title="선호하는 조건의 이벤트" :key="k"></content-swiper>
     <div style="padding: 10px;">
       <div class="main-footer">
-        <ul style="padding: 0 10px;margin: 0;">footer
+        <ul style="padding: 0 10px;margin: 0;">
+          footer
           <li>대표: test</li>
           <li>정보책임자: test</li>
           <li>본 서비스는 정보 제공을 목적으로 하며 각 컨텐츠에 대한 책임은 주최사와 판매업체에 있음을 고시함</li>
@@ -48,9 +54,17 @@ export default {
   name: "PageIndex",
   data() {
     return {
-      latestClickLogs: null,
-      searchQuration: null
+      latestClickLogs: {
+        title: null,
+        events: null
+      },
+      searchQuration: {}
     };
+  },
+  async created() {
+    let accessTkn = SessionStorage.get.item("accessToken");
+    this.latestClickLogs = await this.getLatestEvents(accessTkn);
+    this.searchQuration = await this.getSearchQuration(accessTkn);
   },
   methods: {
     async getLatestEvents(accessTkn) {
@@ -59,7 +73,7 @@ export default {
           headers: {
             Authorization: accessTkn
           },
-          baseURL: RESOURCE_BASE_URL
+          baseURL: USERLOG_BASE_URL
         });
         return result.data;
       } catch (error) {
@@ -107,11 +121,6 @@ export default {
       });
       return res.data.events;
     }
-  },
-  async created() {
-    let accessTkn = SessionStorage.get.item("accessToken");
-    this.latestClickLogs = await this.getLatestEvents(accessTkn);
-    this.searchQuration = await this.getSearchQuration(accessTkn);
   },
   components: {
     contentSwiper
